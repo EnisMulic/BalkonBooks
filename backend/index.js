@@ -5,14 +5,13 @@ const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const swaggerOptions = require("./config/swagger");
 
-const port = process.env.PORT || 3001;
+const apiRoute = require("./routes");
 
+const port = process.env.PORT || 3001;
 const app = express();
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-const apiRoute = require("./routes");
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(bodyParser.json());
 app.use(
