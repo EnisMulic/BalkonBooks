@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const booksController = require("../controllers/books-controller");
 
 /**
  * @swagger
@@ -11,7 +12,7 @@ const router = express.Router();
  *           '200':
  *                  description: get list of books
  */
-router.get("/", () => {});
+router.get("/", booksController.getAll);
 
 /**
  * @swagger
@@ -31,7 +32,7 @@ router.get("/", () => {});
  *           '404':
  *                  description: not found
  */
-router.get("/:id", () => {});
+router.get("/:id", booksController.getById);
 
 /**
  * @swagger
@@ -43,7 +44,7 @@ router.get("/:id", () => {});
  *           '201':
  *                  description: create new book
  */
-router.post("/", () => {});
+router.post("/", booksController.create);
 
 /**
  * @swagger
@@ -63,7 +64,7 @@ router.post("/", () => {});
  *           '404':
  *                  description: not found
  */
-router.put("/:id", () => {});
+router.put("/:id", booksController.update);
 
 /**
  * @swagger
@@ -83,7 +84,7 @@ router.put("/:id", () => {});
  *           '404':
  *                  description: not found
  */
-router.delete("/:id", () => {});
+router.delete("/:id", booksController.remove);
 
 /**
  * @swagger
@@ -103,7 +104,7 @@ router.delete("/:id", () => {});
  *           '404':
  *                  description: not found book
  */
-router.get("/:id/authors", () => {});
+router.get("/:id/authors", booksController.getAuthors);
 
 /**
  * @swagger
@@ -123,7 +124,7 @@ router.get("/:id/authors", () => {});
  *           '404':
  *                  description: not found book
  */
-router.post("/:id/authors", () => {});
+router.post("/:id/authors", booksController.addAuthor);
 
 /**
  * @swagger
@@ -148,6 +149,9 @@ router.post("/:id/authors", () => {});
  *           '404':
  *                  description: not found book or author
  */
-router.delete("/:idBook/authors/:idAuthor", () => {});
+router.delete(
+    "/:idBook/authors/:idAuthor",
+    booksController.removeAuthorFromBook
+);
 
 module.exports = router;
