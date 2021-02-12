@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authController = require("../controllers/auth-controller");
 
 /**
  * @swagger
@@ -11,6 +12,6 @@ const router = express.Router();
  *           '200':
  *               description: A successful response
  */
-router.post("/login", () => {});
+router.post("/login", authController.login);
 
 module.exports = router;
