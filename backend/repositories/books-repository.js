@@ -3,11 +3,12 @@ const db = require("../database/knex");
 const table = "book";
 
 const getAll = async () => {
-    return await db.select().from(table);
+    const books = await db(table);
+    return books;
 };
 
 const getById = async (id) => {
-    return await db.select().from(table).where({ isbn: id });
+    return await db.select().from(table).where({ isbn: id }).first();
 };
 
 const create = async (entity) => {
@@ -15,10 +16,9 @@ const create = async (entity) => {
 };
 
 const update = async (id, entity) => {
-    await db(table)
+    return await db(table)
         .where({ isbn: id })
         .update({
-            isbn: id,
             title: entity.title || null,
             pages: entity.pages || null,
             published: entity.published || null,
@@ -27,7 +27,7 @@ const update = async (id, entity) => {
 };
 
 const remove = async (id) => {
-    await db.select().from(table).where({ isbn: id }).del();
+    return await db.select().from(table).where({ isbn: id }).del();
 };
 
 module.exports = { getAll, getById, create, update, remove };
