@@ -45,11 +45,36 @@ const remove = async (req, res) => {
     res.status(404).json();
 };
 
-const getAuthors = async (req, res) => {};
+const getAuthors = async (req, res) => {
+    booksRepository
+        .getAuthors(req.params.id)
+        .then((data) => res.status(200).json(data))
+        .catch((error) => {
+            res.status(404).json();
+        });
+};
 
-const addAuthor = async (req, res) => {};
+const addAuthor = async (req, res) => {
+    booksRepository
+        .addAuthor(req.params.id, req.body)
+        .then((data) => {
+            res.status(200).json(data);
+        })
+        .catch((_) => res.status(404).json());
+};
 
-const removeAuthorFromBook = async (req, res) => {};
+const removeAuthorFromBook = async (req, res) => {
+    const count = await booksRepository.removeAuthorFromBook(
+        req.params.idBook,
+        req.params.idAuthor
+    );
+
+    if (count !== 0) {
+        res.status(200).json();
+    }
+
+    res.status(404).json();
+};
 
 module.exports = {
     getAll,

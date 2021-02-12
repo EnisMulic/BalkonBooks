@@ -1,4 +1,6 @@
+const { v4: uuidv4 } = require("uuid");
 const db = require("../database/knex");
+const author = require("../models/author");
 
 const table = "book";
 
@@ -30,4 +32,34 @@ const remove = async (id) => {
     return await db.select().from(table).where({ isbn: id }).del();
 };
 
-module.exports = { getAll, getById, create, update, remove };
+const getAuthors = async (id) => {
+    return await db
+        .select()
+        .from("author")
+        .whereIn("id", db("book_author").select("author_id").where("isbn", id));
+};
+
+const addAuthor = async (bookId, author) => {
+    const authorId = uuidv4();
+    await db.insert({ id: authorId, ...author }).into("author");
+    await db.insert({ isbn: bookId, author_id: authorId }).into("book_author");
+};
+
+const removeAuthorFromBook = async (bookId, authorId) => {
+    return await db
+        .select()
+        .from("book_author")
+        .where({ isbn: bookId, author_id: authorId })
+        .del();
+};
+
+module.exports = {
+    getAll,
+    getById,
+    create,
+    update,
+    remove,
+    getAuthors,
+    addAuthor,
+    removeAuthorFromBook,
+};
