@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authorsController = require("../controllers/authors-controller");
 
 /**
  * @swagger
@@ -11,7 +12,7 @@ const router = express.Router();
  *           '200':
  *                  description: get list of authors
  */
-router.get("/", () => {});
+router.get("/", authorsController.getAll);
 
 /**
  * @swagger
@@ -31,7 +32,7 @@ router.get("/", () => {});
  *           '404':
  *                  description: not found
  */
-router.get("/:id", () => {});
+router.get("/:id", authorsController.getById);
 
 /**
  * @swagger
@@ -43,7 +44,7 @@ router.get("/:id", () => {});
  *           '201':
  *                  description: create new author
  */
-router.post("/", () => {});
+router.post("/", authorsController.create);
 
 /**
  * @swagger
@@ -63,7 +64,7 @@ router.post("/", () => {});
  *           '404':
  *                  description: not found
  */
-router.put("/:id", () => {});
+router.put("/:id", authorsController.update);
 
 /**
  * @swagger
@@ -83,7 +84,7 @@ router.put("/:id", () => {});
  *           '404':
  *                  description: not found
  */
-router.delete("/:id", () => {});
+router.delete("/:id", authorsController.remove);
 
 /**
  * @swagger
@@ -103,7 +104,7 @@ router.delete("/:id", () => {});
  *           '404':
  *                  description: not found author
  */
-router.get("/:idAuthor/books", () => {});
+router.get("/:idAuthor/books", authorsController.getBooks);
 
 /**
  * @swagger
@@ -123,7 +124,7 @@ router.get("/:idAuthor/books", () => {});
  *           '404':
  *                  description: not found author
  */
-router.post("/:idAuthor/books", () => {});
+router.post("/:idAuthor/books", authorsController.addBook);
 
 /**
  * @swagger
@@ -148,6 +149,9 @@ router.post("/:idAuthor/books", () => {});
  *           '404':
  *                  description: not found book or author
  */
-router.delete("/:idAuthor/books/:idBook", () => {});
+router.delete(
+    "/:idAuthor/books/:idBook",
+    authorsController.removeAuthorFromBook
+);
 
 module.exports = router;
