@@ -14,4 +14,16 @@ const authController = require("../controllers/auth-controller");
  */
 router.post("/login", authController.login);
 
+/**
+ * @swagger
+ * /api/auth/register:
+ *   post:
+ *       tags:
+ *          - auth
+ *       responses:
+ *           '200':
+ *               description: A successful response
+ */
+router.post("/register", authController.register);
+
 module.exports = router;
