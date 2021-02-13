@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const booksController = require("../controllers/books-controller");
+const authenticateToken = require("../middleware/auth-middleware");
 
 /**
  * @swagger
@@ -44,7 +45,7 @@ router.get("/:id", booksController.getById);
  *           '201':
  *                  description: create new book
  */
-router.post("/", booksController.create);
+router.post("/", authenticateToken, booksController.create);
 
 /**
  * @swagger
@@ -64,7 +65,7 @@ router.post("/", booksController.create);
  *           '404':
  *                  description: not found
  */
-router.put("/:id", booksController.update);
+router.put("/:id", authenticateToken, booksController.update);
 
 /**
  * @swagger
@@ -84,7 +85,7 @@ router.put("/:id", booksController.update);
  *           '404':
  *                  description: not found
  */
-router.delete("/:id", booksController.remove);
+router.delete("/:id", authenticateToken, booksController.remove);
 
 /**
  * @swagger
@@ -124,7 +125,7 @@ router.get("/:id/authors", booksController.getAuthors);
  *           '404':
  *                  description: not found book
  */
-router.post("/:id/authors", booksController.addAuthor);
+router.post("/:id/authors", authenticateToken, booksController.addAuthor);
 
 /**
  * @swagger
@@ -151,6 +152,7 @@ router.post("/:id/authors", booksController.addAuthor);
  */
 router.delete(
     "/:idBook/authors/:idAuthor",
+    authenticateToken,
     booksController.removeAuthorFromBook
 );
 
