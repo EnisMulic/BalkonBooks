@@ -30,4 +30,21 @@ const remove = async (id) => {
     return await db.select().from(table).where({ id: id }).del();
 };
 
-module.exports = { getAll, getById, create, update, remove };
+const getBooks = async (id) => {
+    return await db
+        .select()
+        .from("book")
+        .whereIn(
+            "isbn",
+            db("book_author").select("isbn").where("author_id", id)
+        );
+};
+
+const addBook = async (authorId, book) => {
+    await db.insert(book).into("book");
+    await db
+        .insert({ isbn: book.isbn, author_id: authorId })
+        .into("book_author");
+};
+
+module.exports = { getAll, getById, create, update, remove, getBooks, addBook };

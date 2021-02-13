@@ -1,4 +1,5 @@
 const authorsRepository = require("../repositories/authors-repository");
+const booksRepository = require("../repositories/books-repository");
 
 const getAll = async (req, res) => {
     authorsRepository.getAll().then((data) => res.status(200).json(data));
@@ -45,11 +46,36 @@ const remove = async (req, res) => {
     res.status(404).json();
 };
 
-const getBooks = async (req, res) => {};
+const getBooks = async (req, res) => {
+    authorsRepository
+        .getBooks(req.params.idAuthor)
+        .then((data) => res.status(200).json(data))
+        .catch((error) => {
+            res.status(404).json();
+        });
+};
 
-const addBook = async (req, res) => {};
+const addBook = async (req, res) => {
+    authorsRepository
+        .addBook(req.params.idAuthor, req.body)
+        .then((data) => {
+            res.status(200).json(data);
+        })
+        .catch((_) => res.status(404).json());
+};
 
-const removeAuthorFromBook = async (req, res) => {};
+const removeAuthorFromBook = async (req, res) => {
+    const count = await booksRepository.removeAuthorFromBook(
+        req.params.idBook,
+        req.params.idAuthor
+    );
+
+    if (count !== 0) {
+        res.status(200).json();
+    }
+
+    res.status(404).json();
+};
 
 module.exports = {
     getAll,
