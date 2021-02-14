@@ -1,17 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import thunk from "redux-thunk";
+
+import bookReducer from "./store/reducers/books";
+
+import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const rootReducer = combineReducers({
+    book: bookReducer,
+});
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
 ReactDOM.render(
-    <BrowserRouter>
-        <React.StrictMode>
-            <App />
-        </React.StrictMode>
-    </BrowserRouter>,
+    <Provider store={store}>
+        <BrowserRouter>
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>
+        </BrowserRouter>
+    </Provider>,
     document.getElementById("root")
 );
 
