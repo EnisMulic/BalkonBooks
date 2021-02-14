@@ -13,7 +13,7 @@ const Authors = () => {
         dispatch,
     ]);
 
-    const authors = useSelector((state) => state.author.authors);
+    const authors = useSelector((state) => state.authors.data);
 
     useEffect(() => {
         onAuthorsFetch();

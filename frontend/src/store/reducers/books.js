@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 import updateObject from "../../utils/updateObject";
 
 const initialState = {
-    books: [],
+    data: [],
     loading: false,
 };
 
@@ -12,7 +12,7 @@ const fetchBooksStart = (state, action) => {
 
 const fetchBooksSuccess = (state, action) => {
     return updateObject(state, {
-        books: action.books,
+        data: action.books,
         loading: false,
     });
 };

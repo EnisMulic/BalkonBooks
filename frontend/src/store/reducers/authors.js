@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 import updateObject from "../../utils/updateObject";
 
 const initialState = {
-    authors: [],
+    data: [],
     loading: false,
 };
 
@@ -12,7 +12,7 @@ const fetchAuthorsStart = (state, action) => {
 
 const fetchAuthorsSuccess = (state, action) => {
     return updateObject(state, {
-        authors: action.authors,
+        data: action.authors,
         loading: false,
     });
 };

@@ -13,7 +13,7 @@ const Books = (props) => {
         dispatch,
     ]);
 
-    const books = useSelector((state) => state.book.books);
+    const books = useSelector((state) => state.books.data);
 
     useEffect(() => {
         onBooksFetch();

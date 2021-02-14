@@ -7,15 +7,15 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import thunk from "redux-thunk";
 
-import bookReducer from "./store/reducers/books";
-import authorReducer from "./store/reducers/authors";
+import booksReducer from "./store/reducers/books";
+import authorsReducer from "./store/reducers/authors";
 
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const rootReducer = combineReducers({
-    book: bookReducer,
-    author: authorReducer,
+    books: booksReducer,
+    authors: authorsReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
