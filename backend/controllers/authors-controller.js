@@ -10,9 +10,9 @@ const getById = async (req, res) => {
 
     if (author !== undefined) {
         res.status(200).json(author);
+    } else {
+        res.status(404).json();
     }
-
-    res.status(404).json();
 };
 
 const create = async (req, res) => {
@@ -31,9 +31,9 @@ const update = async (req, res) => {
 
     if (count !== 0) {
         res.status(200).json();
+    } else {
+        res.status(404).json();
     }
-
-    res.status(404).json();
 };
 
 const remove = async (req, res) => {
@@ -41,9 +41,9 @@ const remove = async (req, res) => {
 
     if (count !== 0) {
         res.status(200).json();
+    } else {
+        res.status(404).json();
     }
-
-    res.status(404).json();
 };
 
 const getBooks = async (req, res) => {
@@ -72,9 +72,9 @@ const removeAuthorFromBook = async (req, res) => {
 
     if (count !== 0) {
         res.status(200).json();
+    } else {
+        res.status(404).json();
     }
-
-    res.status(404).json();
 };
 
 module.exports = {

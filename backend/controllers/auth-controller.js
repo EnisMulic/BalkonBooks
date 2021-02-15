@@ -21,10 +21,10 @@ const login = async (req, res) => {
 
     if (!correctPassword) {
         res.status(400).json({ error: "Wrong password" });
+    } else {
+        const token = generateAuthToken(user);
+        res.status(200).json({ token: token });
     }
-
-    const token = generateAuthToken(user);
-    res.status(200).json({ token: token });
 };
 
 module.exports = { register, login };
