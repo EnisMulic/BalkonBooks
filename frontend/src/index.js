@@ -8,6 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import thunk from "redux-thunk";
 
 import booksReducer from "./store/reducers/books";
+import bookReducer from "./store/reducers/book";
 import authorsReducer from "./store/reducers/authors";
 import authorReducer from "./store/reducers/author";
 
@@ -16,6 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const rootReducer = combineReducers({
     books: booksReducer,
+    book: bookReducer,
     authors: authorsReducer,
     author: authorReducer,
 });

@@ -16,3 +16,9 @@ export {
     fetchAuthorSuccess,
     fetchAuthorFail,
 } from "./author";
+export {
+    fetchBook,
+    fetchBookStart,
+    fetchBookSuccess,
+    fetchBookFail,
+} from "./book";

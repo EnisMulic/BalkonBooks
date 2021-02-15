@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouteMatch, Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import { InfoCircle } from "react-bootstrap-icons";
 
 import * as actions from "../../store/actions";
 
 import style from "./Books.module.css";
 
-const Books = (props) => {
+const Books = () => {
     const dispatch = useDispatch();
 
     const onBooksFetch = useCallback(() => dispatch(actions.fetchBooks()), [
@@ -19,6 +21,7 @@ const Books = (props) => {
         onBooksFetch();
     }, [onBooksFetch]);
 
+    const { path } = useRouteMatch();
     return (
         <div className={style.Books}>
             <Table striped bordered>
@@ -28,6 +31,7 @@ const Books = (props) => {
                         <th>Title</th>
                         <th>Pages</th>
                         <th>Published</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +43,11 @@ const Books = (props) => {
                                 <td>{title}</td>
                                 <td>{pages}</td>
                                 <td>{published}</td>
+                                <td className={style.Actions}>
+                                    <Link to={path + "/" + isbn}>
+                                        <InfoCircle />
+                                    </Link>
+                                </td>
                             </tr>
                         );
                     })}

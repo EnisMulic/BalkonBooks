@@ -3,6 +3,7 @@ import "./App.css";
 import Nav from "./components/Nav";
 import AuthorDetails from "./containers/AuthorDetails";
 import Authors from "./containers/Authors";
+import BookDetails from "./containers/BookDetails";
 import Books from "./containers/Books";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
@@ -12,7 +13,10 @@ const App = () => {
         <>
             <Nav isAuth={false} />
             <Switch>
-                <Route path="/books">
+                <Route path="/books/:id">
+                    <BookDetails />
+                </Route>
+                <Route path="/books" exact>
                     <Books />
                 </Route>
                 <Route path="/authors/:id">
