@@ -11,6 +11,7 @@ import booksReducer from "./store/reducers/books";
 import bookReducer from "./store/reducers/book";
 import authorsReducer from "./store/reducers/authors";
 import authorReducer from "./store/reducers/author";
+import authReducer from "./store/reducers/auth";
 
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     book: bookReducer,
     authors: authorsReducer,
     author: authorReducer,
+    auth: authReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

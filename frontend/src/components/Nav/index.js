@@ -1,9 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import Nav from "react-bootstrap/Nav";
 import style from "./Nav.module.css";
 
-const NavBar = (props) => {
+const NavBar = () => {
+    const auth = useSelector((state) => state.auth);
+    console.log(auth);
     return (
         <>
             <Nav className={style.Nav}>
@@ -23,7 +26,7 @@ const NavBar = (props) => {
                     </Nav.Link>
                 </Nav.Item>
                 <div className={style.Spacer} />
-                {!props.isAuth ? (
+                {auth.token === null ? (
                     <Nav.Item className="btn">
                         <Nav.Link href="/login" className="text-white">
                             Login

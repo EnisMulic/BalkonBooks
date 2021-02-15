@@ -1,5 +1,10 @@
+import { useEffect, useCallback } from "react";
 import { Route, Switch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import * as actions from "./store/actions";
 import "./App.css";
+
 import Nav from "./components/Nav";
 import AuthorDetails from "./containers/AuthorDetails";
 import Authors from "./containers/Authors";
@@ -9,9 +14,20 @@ import Home from "./containers/Home";
 import Login from "./containers/Login";
 
 const App = () => {
+    const dispatch = useDispatch();
+
+    const onTryAutoAuth = useCallback(
+        () => dispatch(actions.authCheckState()),
+        [dispatch]
+    );
+
+    useEffect(() => {
+        onTryAutoAuth();
+    }, [onTryAutoAuth]);
+
     return (
         <>
-            <Nav isAuth={false} />
+            <Nav />
             <Switch>
                 <Route path="/books/:id">
                     <BookDetails />
