@@ -9,6 +9,7 @@ import thunk from "redux-thunk";
 
 import booksReducer from "./store/reducers/books";
 import authorsReducer from "./store/reducers/authors";
+import authorReducer from "./store/reducers/author";
 
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,6 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const rootReducer = combineReducers({
     books: booksReducer,
     authors: authorsReducer,
+    author: authorReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

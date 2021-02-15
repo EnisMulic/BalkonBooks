@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouteMatch, Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import { InfoCircle } from "react-bootstrap-icons";
 
 import * as actions from "../../store/actions";
 
@@ -21,6 +23,7 @@ const Authors = () => {
 
     const dateOptions = { year: "numeric", month: "long", day: "numeric" };
 
+    const { path } = useRouteMatch();
     return (
         <div className={style.Authors}>
             <Table striped bordered>
@@ -29,6 +32,7 @@ const Authors = () => {
                         <th>First name</th>
                         <th>Last name</th>
                         <th>Date of birth</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +49,11 @@ const Authors = () => {
                                         "en-Us",
                                         dateOptions
                                     )}
+                                </td>
+                                <td className={style.Actions}>
+                                    <Link to={path + "/" + id}>
+                                        <InfoCircle />
+                                    </Link>
                                 </td>
                             </tr>
                         );
