@@ -1,5 +1,5 @@
 const author = {
-    id: guid,
+    // id: guid,
     firstName: String,
     lastName: String,
     dob: Date, // date of birth
