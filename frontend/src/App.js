@@ -13,6 +13,7 @@ import Books from "./containers/Books";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
 import EditAuthor from "./containers/EditAuthor";
+import EditBook from "./containers/EditBook";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const App = () => {
 
     let routes = (
         <Switch>
-            <Route path="/books/:id">
+            <Route path="/books/:id" exact>
                 <BookDetails />
             </Route>
             <Route path="/books" exact>
@@ -54,11 +55,14 @@ const App = () => {
     if (auth.token !== null) {
         routes = (
             <Switch>
-                <Route path="/books/:id">
+                <Route path="/books/:id" exact>
                     <BookDetails />
                 </Route>
                 <Route path="/books" exact>
                     <Books />
+                </Route>
+                <Route path="/books/edit/:id">
+                    <EditBook />
                 </Route>
                 <Route path="/authors/:id" exact>
                     <AuthorDetails />

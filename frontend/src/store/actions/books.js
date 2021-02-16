@@ -78,3 +78,43 @@ export const deleteBook = (id) => {
             .catch((error) => deleteBookFail(error));
     };
 };
+
+export const editBookStart = () => {
+    return {
+        type: actionTypes.EDIT_BOOK_START,
+    };
+};
+
+export const editBookSuccess = () => {
+    return {
+        type: actionTypes.EDIT_BOOK_SUCCESS,
+    };
+};
+
+export const editBookFail = (error) => {
+    return {
+        type: actionTypes.EDIT_BOOK_FAIL,
+        error: error,
+    };
+};
+
+export const editBook = (id, book) => {
+    return (dispatch) => {
+        dispatch(editBookStart());
+
+        let config = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        };
+
+        axios
+            .put(`/books/${id}`, book, config)
+            .then((res) => {
+                dispatch(editBookSuccess());
+            })
+            .catch((err) => {
+                dispatch(editBookFail(err));
+            });
+    };
+};

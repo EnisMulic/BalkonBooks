@@ -4,6 +4,7 @@ import updateObject from "../../utils/updateObject";
 const initialState = {
     data: [],
     loading: false,
+    error: null,
 };
 
 const fetchBooksStart = (state, action) => {
@@ -38,6 +39,26 @@ const deleteBookFail = (state, action) => {
     });
 };
 
+const editBookStart = (state, action) => {
+    return state;
+};
+
+const editBookSuccess = (state, action) => {
+    const newBooks = { ...state.data };
+    var foundIndex = newBooks.findIndex((book) => book.isbn === action.id);
+    newBooks[foundIndex] = action.book;
+
+    return updateObject(state, {
+        data: newBooks,
+    });
+};
+
+const editBookFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+    });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_BOOKS_START:
@@ -52,6 +73,12 @@ const reducer = (state = initialState, action) => {
             return deleteBookSuccess(state, action);
         case actionTypes.DELETE_BOOK_FAIL:
             return deleteBookFail(state, action);
+        case actionTypes.EDIT_BOOK_START:
+            return editBookStart(state, action);
+        case actionTypes.EDIT_BOOK_SUCCESS:
+            return editBookSuccess(state, action);
+        case actionTypes.EDIT_BOOK_FAIL:
+            return editBookFail(state, action);
         default:
             return state;
     }

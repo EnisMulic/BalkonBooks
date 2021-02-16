@@ -7,6 +7,10 @@ export {
     deleteBookStart,
     deleteBookSuccess,
     deleteBookFail,
+    editBook,
+    editBookStart,
+    editBookSuccess,
+    editBookFail,
 } from "./books";
 export {
     fetchAuthors,
