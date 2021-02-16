@@ -40,3 +40,40 @@ export const fetchAuthors = () => {
             });
     };
 };
+
+export const deleteAuthorStart = (id) => {
+    return {
+        type: actionTypes.DELETE_AUTHOR_START,
+        id: id,
+    };
+};
+
+export const deleteAuthorSuccess = (id) => {
+    return {
+        type: actionTypes.DELETE_AUTHOR_SUCCESS,
+        id: id,
+    };
+};
+
+export const deleteAuthorFail = () => {
+    return {
+        type: actionTypes.DELETE_AUTHOR_FAIL,
+    };
+};
+
+export const deleteAuthor = (id) => {
+    return (dispatch) => {
+        dispatch(deleteAuthorStart());
+
+        let config = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        };
+
+        axios
+            .delete(`/authors/${id}`, config)
+            .then((res) => dispatch(deleteAuthorSuccess(id)))
+            .catch((error) => deleteAuthorFail(error));
+    };
+};

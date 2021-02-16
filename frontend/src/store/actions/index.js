@@ -9,6 +9,10 @@ export {
     fetchAuthorsStart,
     fetchAuthorsSuccess,
     fetchAuthorsFail,
+    deleteAuthor,
+    deleteAuthorStart,
+    deleteAuthorSuccess,
+    deleteAuthorFail,
 } from "./authors";
 export {
     fetchAuthor,

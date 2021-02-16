@@ -6,7 +6,7 @@ import style from "./Nav.module.css";
 
 const NavBar = () => {
     const auth = useSelector((state) => state.auth);
-    console.log(auth);
+
     return (
         <>
             <Nav className={style.Nav}>

@@ -4,6 +4,7 @@ import updateObject from "../../utils/updateObject";
 const initialState = {
     data: [],
     loading: false,
+    error: null,
 };
 
 const fetchAuthorsStart = (state, action) => {
@@ -18,7 +19,26 @@ const fetchAuthorsSuccess = (state, action) => {
 };
 
 const fetchAuthorsFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+    });
+};
+
+const deleteAuthorStart = (state, action) => {
     return state;
+};
+
+const deleteAuthorSuccess = (state, action) => {
+    let newAuthors = state.data.filter((author) => author.id !== action.id);
+    return updateObject(state, {
+        data: newAuthors,
+    });
+};
+
+const deleteAuthorFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+    });
 };
 
 const reducer = (state = initialState, action) => {
@@ -29,6 +49,12 @@ const reducer = (state = initialState, action) => {
             return fetchAuthorsSuccess(state, action);
         case actionTypes.FETCH_AUTHORS_FAIL:
             return fetchAuthorsFail(state, action);
+        case actionTypes.DELETE_AUTHOR_START:
+            return deleteAuthorStart(state, action);
+        case actionTypes.DELETE_AUTHOR_SUCCESS:
+            return deleteAuthorSuccess(state, action);
+        case actionTypes.DELETE_AUTHOR_FAIL:
+            return deleteAuthorFail(state, action);
         default:
             return state;
     }
