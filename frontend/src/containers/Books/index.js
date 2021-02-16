@@ -1,13 +1,15 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { InfoCircle, Trash } from "react-bootstrap-icons";
+import { InfoCircle, Trash, PlusCircle } from "react-bootstrap-icons";
 
 import * as actions from "../../store/actions";
 
 import style from "./Books.module.css";
+import Modal from "../../components/Modal";
+import NewBook from "../../components/NewBook";
 
 const Books = () => {
     const dispatch = useDispatch();
@@ -27,9 +29,24 @@ const Books = () => {
         onBooksFetch();
     }, [onBooksFetch]);
 
+    const [showModal, setShowModal] = useState(false);
+
     const { path } = useRouteMatch();
     return (
         <div className={style.Books}>
+            {auth.token ? (
+                <>
+                    <Modal
+                        show={showModal}
+                        modalClosed={() => setShowModal(false)}
+                    >
+                        <NewBook onSuccess={() => setShowModal(false)} />
+                    </Modal>
+                    <Button variant="link" onClick={() => setShowModal(true)}>
+                        <PlusCircle className={style.Action} />
+                    </Button>
+                </>
+            ) : null}
             <Table striped bordered>
                 <thead>
                     <tr>
@@ -51,14 +68,14 @@ const Books = () => {
                                 <td>{published}</td>
                                 <td className={style.Actions}>
                                     <Link to={path + "/" + isbn}>
-                                        <InfoCircle />
+                                        <InfoCircle className={style.Action} />
                                     </Link>
                                     {auth.token ? (
                                         <Button
                                             variant="link"
                                             onClick={() => onBookDelete(isbn)}
                                         >
-                                            <Trash />
+                                            <Trash className={style.Action} />
                                         </Button>
                                     ) : null}
                                 </td>

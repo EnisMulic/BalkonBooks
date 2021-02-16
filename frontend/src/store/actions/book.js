@@ -35,3 +35,43 @@ export const fetchBook = (id) => {
             });
     };
 };
+
+export const addBookStart = () => {
+    return {
+        type: actionTypes.ADD_BOOK_START,
+    };
+};
+
+export const addBookSuccess = () => {
+    return {
+        type: actionTypes.ADD_BOOK_SUCCESS,
+    };
+};
+
+export const addBookFail = (error) => {
+    return {
+        type: actionTypes.ADD_BOOK_FAIL,
+        error: error,
+    };
+};
+
+export const addBook = (book) => {
+    return (dispatch) => {
+        dispatch(addBookStart());
+
+        let config = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        };
+
+        axios
+            .post(`/books`, book, config)
+            .then((res) => {
+                dispatch(addBookSuccess());
+            })
+            .catch((err) => {
+                dispatch(addBookFail(err));
+            });
+    };
+};

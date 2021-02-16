@@ -44,7 +44,7 @@ const NewAuthor = (props) => {
                                 type="text"
                                 name="firstName"
                             />
-                            <ErrorMessage name="text" component="div" />
+                            <ErrorMessage name="firstName" component="div" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="lastName">Last Name</label>
