@@ -35,3 +35,43 @@ export const fetchAuthor = (id) => {
             });
     };
 };
+
+export const addAuthorStart = () => {
+    return {
+        type: actionTypes.ADD_AUTHOR_START,
+    };
+};
+
+export const addAuthorSuccess = () => {
+    return {
+        type: actionTypes.ADD_AUTHOR_SUCCESS,
+    };
+};
+
+export const addAuthorFail = (error) => {
+    return {
+        type: actionTypes.ADD_AUTHOR_FAIL,
+        error: error,
+    };
+};
+
+export const addAuthor = (author) => {
+    return (dispatch) => {
+        dispatch(addAuthorStart());
+
+        let config = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        };
+
+        axios
+            .post(`/authors`, author, config)
+            .then((res) => {
+                dispatch(addAuthorSuccess());
+            })
+            .catch((err) => {
+                dispatch(addAuthorFail(err));
+            });
+    };
+};

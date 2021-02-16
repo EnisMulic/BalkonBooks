@@ -23,6 +23,10 @@ export {
     fetchAuthorStart,
     fetchAuthorSuccess,
     fetchAuthorFail,
+    addAuthor,
+    addAuthorStart,
+    addAuthorSuccess,
+    addAuthorFail,
 } from "./author";
 export {
     fetchBook,

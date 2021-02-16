@@ -1,13 +1,15 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { InfoCircle, Trash } from "react-bootstrap-icons";
+import { InfoCircle, Trash, PlusCircle } from "react-bootstrap-icons";
 
 import * as actions from "../../store/actions";
 
 import style from "./Authors.module.css";
+import Modal from "../../components/Modal";
+import NewAuthor from "../../components/NewAuthor";
 
 const Authors = () => {
     const dispatch = useDispatch();
@@ -30,9 +32,25 @@ const Authors = () => {
 
     const dateOptions = { year: "numeric", month: "long", day: "numeric" };
 
+    const [showModal, setShowModal] = useState(false);
+
     const { path } = useRouteMatch();
     return (
         <div className={style.Authors}>
+            {auth.token ? (
+                <>
+                    <Modal
+                        show={showModal}
+                        modalClosed={() => setShowModal(false)}
+                    >
+                        <NewAuthor onSuccess={() => setShowModal(false)} />
+                    </Modal>
+                    <Button variant="link" onClick={() => setShowModal(true)}>
+                        <PlusCircle className={style.Action} />
+                    </Button>
+                </>
+            ) : null}
+
             <Table striped bordered>
                 <thead>
                     <tr>
@@ -59,14 +77,14 @@ const Authors = () => {
                                 </td>
                                 <td className={style.Actions}>
                                     <Link to={path + "/" + id}>
-                                        <InfoCircle />
+                                        <InfoCircle className={style.Action} />
                                     </Link>
                                     {auth.token ? (
                                         <Button
                                             variant="link"
                                             onClick={() => onAuthorDelete(id)}
                                         >
-                                            <Trash />
+                                            <Trash className={style.Action} />
                                         </Button>
                                     ) : null}
                                 </td>

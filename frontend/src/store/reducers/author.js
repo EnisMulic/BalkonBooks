@@ -4,6 +4,7 @@ import updateObject from "../../utils/updateObject";
 const initialState = {
     data: null,
     loading: false,
+    error: null,
 };
 
 const fetchAuthorStart = (state, action) => {
@@ -18,7 +19,23 @@ const fetchAuthorSuccess = (state, action) => {
 };
 
 const fetchAuthorFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+    });
+};
+
+const addAuthorStart = (state, action) => {
     return state;
+};
+
+const addAuthorSuccess = (state, action) => {
+    return state;
+};
+
+const addAuthorFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+    });
 };
 
 const reducer = (state = initialState, action) => {
@@ -29,6 +46,12 @@ const reducer = (state = initialState, action) => {
             return fetchAuthorSuccess(state, action);
         case actionTypes.FETCH_AUTHOR_FAIL:
             return fetchAuthorFail(state, action);
+        case actionTypes.ADD_AUTHOR_START:
+            return addAuthorStart(state, action);
+        case actionTypes.ADD_AUTHOR_SUCCESS:
+            return addAuthorSuccess(state, action);
+        case actionTypes.ADD_AUTHOR_FAIL:
+            return addAuthorFail(state, action);
         default:
             return state;
     }
