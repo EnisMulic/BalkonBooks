@@ -3,6 +3,10 @@ export {
     fetchBooksStart,
     fetchBooksFail,
     fetchBooksSuccess,
+    deleteBook,
+    deleteBookStart,
+    deleteBookSuccess,
+    deleteBookFail,
 } from "./books";
 export {
     fetchAuthors,

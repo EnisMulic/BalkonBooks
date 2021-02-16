@@ -21,6 +21,23 @@ const fetchBooksFail = (state, action) => {
     return state;
 };
 
+const deleteBookStart = (state, action) => {
+    return state;
+};
+
+const deleteBookSuccess = (state, action) => {
+    let newBooks = state.data.filter((book) => book.isbn !== action.id);
+    return updateObject(state, {
+        data: newBooks,
+    });
+};
+
+const deleteBookFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+    });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_BOOKS_START:
@@ -29,6 +46,12 @@ const reducer = (state = initialState, action) => {
             return fetchBooksSuccess(state, action);
         case actionTypes.FETCH_BOOKS_FAIL:
             return fetchBooksFail(state, action);
+        case actionTypes.DELETE_BOOK_START:
+            return deleteBookStart(state, action);
+        case actionTypes.DELETE_BOOK_SUCCESS:
+            return deleteBookSuccess(state, action);
+        case actionTypes.DELETE_BOOK_FAIL:
+            return deleteBookFail(state, action);
         default:
             return state;
     }

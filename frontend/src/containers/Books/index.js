@@ -2,7 +2,8 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import { InfoCircle } from "react-bootstrap-icons";
+import Button from "react-bootstrap/Button";
+import { InfoCircle, Trash } from "react-bootstrap-icons";
 
 import * as actions from "../../store/actions";
 
@@ -15,7 +16,12 @@ const Books = () => {
         dispatch,
     ]);
 
+    const onBookDelete = useCallback((id) => dispatch(actions.deleteBook(id)), [
+        dispatch,
+    ]);
+
     const books = useSelector((state) => state.books.data);
+    const auth = useSelector((state) => state.auth);
 
     useEffect(() => {
         onBooksFetch();
@@ -47,6 +53,14 @@ const Books = () => {
                                     <Link to={path + "/" + isbn}>
                                         <InfoCircle />
                                     </Link>
+                                    {auth.token ? (
+                                        <Button
+                                            variant="link"
+                                            onClick={() => onBookDelete(isbn)}
+                                        >
+                                            <Trash />
+                                        </Button>
+                                    ) : null}
                                 </td>
                             </tr>
                         );

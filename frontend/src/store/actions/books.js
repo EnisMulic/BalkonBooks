@@ -41,3 +41,40 @@ export const fetchBooks = () => {
             });
     };
 };
+
+export const deleteBookStart = (id) => {
+    return {
+        type: actionTypes.DELETE_BOOK_START,
+        id: id,
+    };
+};
+
+export const deleteBookSuccess = (id) => {
+    return {
+        type: actionTypes.DELETE_BOOK_SUCCESS,
+        id: id,
+    };
+};
+
+export const deleteBookFail = () => {
+    return {
+        type: actionTypes.DELETE_BOOK_FAIL,
+    };
+};
+
+export const deleteBook = (id) => {
+    return (dispatch) => {
+        dispatch(deleteBookStart());
+
+        let config = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        };
+
+        axios
+            .delete(`/books/${id}`, config)
+            .then((res) => dispatch(deleteBookSuccess(id)))
+            .catch((error) => deleteBookFail(error));
+    };
+};
