@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { InfoCircle, Trash, PlusCircle } from "react-bootstrap-icons";
+import {
+    InfoCircle,
+    Trash,
+    PlusCircle,
+    PencilSquare,
+} from "react-bootstrap-icons";
 
 import * as actions from "../../store/actions";
 
@@ -80,12 +85,23 @@ const Authors = () => {
                                         <InfoCircle className={style.Action} />
                                     </Link>
                                     {auth.token ? (
-                                        <Button
-                                            variant="link"
-                                            onClick={() => onAuthorDelete(id)}
-                                        >
-                                            <Trash className={style.Action} />
-                                        </Button>
+                                        <>
+                                            <Button
+                                                variant="link"
+                                                onClick={() =>
+                                                    onAuthorDelete(id)
+                                                }
+                                            >
+                                                <Trash
+                                                    className={style.Action}
+                                                />
+                                            </Button>
+                                            <Link to={path + "/edit/" + id}>
+                                                <PencilSquare
+                                                    className={style.Action}
+                                                />
+                                            </Link>
+                                        </>
                                     ) : null}
                                 </td>
                             </tr>

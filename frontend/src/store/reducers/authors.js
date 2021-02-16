@@ -41,6 +41,26 @@ const deleteAuthorFail = (state, action) => {
     });
 };
 
+const editAuthorStart = (state, action) => {
+    return state;
+};
+
+const editAuthorSuccess = (state, action) => {
+    const newAuthors = { ...state.data };
+    var foundIndex = newAuthors.findIndex((author) => author.id === action.id);
+    newAuthors[foundIndex] = action.author;
+
+    return updateObject(state, {
+        data: newAuthors,
+    });
+};
+
+const editAuthorFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+    });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_AUTHORS_START:
@@ -55,6 +75,12 @@ const reducer = (state = initialState, action) => {
             return deleteAuthorSuccess(state, action);
         case actionTypes.DELETE_AUTHOR_FAIL:
             return deleteAuthorFail(state, action);
+        case actionTypes.EDIT_AUTHOR_START:
+            return editAuthorStart(state, action);
+        case actionTypes.EDIT_AUTHOR_SUCCESS:
+            return editAuthorSuccess(state, action);
+        case actionTypes.EDIT_AUTHOR_FAIL:
+            return editAuthorFail(state, action);
         default:
             return state;
     }

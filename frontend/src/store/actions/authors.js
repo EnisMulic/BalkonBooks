@@ -77,3 +77,43 @@ export const deleteAuthor = (id) => {
             .catch((error) => deleteAuthorFail(error));
     };
 };
+
+export const editAuthorStart = () => {
+    return {
+        type: actionTypes.EDIT_AUTHOR_START,
+    };
+};
+
+export const editAuthorSuccess = () => {
+    return {
+        type: actionTypes.EDIT_AUTHOR_SUCCESS,
+    };
+};
+
+export const editAuthorFail = (error) => {
+    return {
+        type: actionTypes.EDIT_AUTHOR_FAIL,
+        error: error,
+    };
+};
+
+export const editAuthor = (id, author) => {
+    return (dispatch) => {
+        dispatch(editAuthorStart());
+
+        let config = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        };
+
+        axios
+            .put(`/authors/${id}`, author, config)
+            .then((res) => {
+                dispatch(editAuthorSuccess());
+            })
+            .catch((err) => {
+                dispatch(editAuthorFail(err));
+            });
+    };
+};

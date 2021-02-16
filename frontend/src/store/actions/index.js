@@ -17,6 +17,10 @@ export {
     deleteAuthorStart,
     deleteAuthorSuccess,
     deleteAuthorFail,
+    editAuthor,
+    editAuthorStart,
+    editAuthorSuccess,
+    editAuthorFail,
 } from "./authors";
 export {
     fetchAuthor,

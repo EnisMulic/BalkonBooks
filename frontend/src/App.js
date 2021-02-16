@@ -12,6 +12,7 @@ import BookDetails from "./containers/BookDetails";
 import Books from "./containers/Books";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
+import EditAuthor from "./containers/EditAuthor";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -25,9 +26,33 @@ const App = () => {
         onTryAutoAuth();
     }, [onTryAutoAuth]);
 
-    return (
-        <>
-            <Nav />
+    const auth = useSelector((state) => state.auth);
+
+    let routes = (
+        <Switch>
+            <Route path="/books/:id">
+                <BookDetails />
+            </Route>
+            <Route path="/books" exact>
+                <Books />
+            </Route>
+            <Route path="/authors/:id" exact>
+                <AuthorDetails />
+            </Route>
+            <Route path="/authors" exact>
+                <Authors />
+            </Route>
+            <Route path="/login">
+                <Login />
+            </Route>
+            <Route path="/" exact>
+                <Home />
+            </Route>
+        </Switch>
+    );
+
+    if (auth.token !== null) {
+        routes = (
             <Switch>
                 <Route path="/books/:id">
                     <BookDetails />
@@ -35,19 +60,26 @@ const App = () => {
                 <Route path="/books" exact>
                     <Books />
                 </Route>
-                <Route path="/authors/:id">
+                <Route path="/authors/:id" exact>
                     <AuthorDetails />
                 </Route>
                 <Route path="/authors" exact>
                     <Authors />
                 </Route>
-                <Route path="/login">
-                    <Login />
+                <Route path="/authors/edit/:id">
+                    <EditAuthor />
                 </Route>
                 <Route path="/" exact>
                     <Home />
                 </Route>
             </Switch>
+        );
+    }
+
+    return (
+        <>
+            <Nav />
+            {routes}
         </>
     );
 };

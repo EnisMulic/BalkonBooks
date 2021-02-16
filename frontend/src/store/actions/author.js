@@ -42,9 +42,11 @@ export const addAuthorStart = () => {
     };
 };
 
-export const addAuthorSuccess = () => {
+export const addAuthorSuccess = (id, author) => {
     return {
         type: actionTypes.ADD_AUTHOR_SUCCESS,
+        author: author,
+        id: id,
     };
 };
 
