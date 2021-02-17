@@ -45,8 +45,10 @@ const getAuthors = async (id) => {
 
 const addAuthor = async (bookId, author) => {
     const authorId = uuidv4();
-    await db.insert({ id: authorId, ...author }).into("author");
+    const newAuthor = { id: authorId, ...author };
+    await db.insert(newAuthor).into("author");
     await db.insert({ isbn: bookId, author_id: authorId }).into("book_author");
+    return newAuthor;
 };
 
 const removeAuthorFromBook = async (bookId, authorId) => {
