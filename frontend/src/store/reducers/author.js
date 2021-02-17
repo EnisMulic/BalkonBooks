@@ -38,6 +38,20 @@ const addAuthorFail = (state, action) => {
     });
 };
 
+const addBookToAuthorStart = (state, action) => {
+    return state;
+};
+
+const addBookToAuthorSuccess = (state, action) => {
+    return state.data.books.push(action.book);
+};
+
+const addBookToAuthorFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+    });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_AUTHOR_START:
@@ -52,6 +66,12 @@ const reducer = (state = initialState, action) => {
             return addAuthorSuccess(state, action);
         case actionTypes.ADD_AUTHOR_FAIL:
             return addAuthorFail(state, action);
+        case actionTypes.ADD_BOOK_TO_AUTHOR_START:
+            return addBookToAuthorStart(state, action);
+        case actionTypes.ADD_BOOK_TO_AUTHOR_SUCCESS:
+            return addBookToAuthorSuccess(state, action);
+        case actionTypes.ADD_BOOK_TO_AUTHOR_FAIL:
+            return addBookToAuthorFail(state, action);
         default:
             return state;
     }

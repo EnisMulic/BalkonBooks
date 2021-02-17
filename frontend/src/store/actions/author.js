@@ -77,3 +77,44 @@ export const addAuthor = (author) => {
             });
     };
 };
+
+export const addBookToAuthorStart = () => {
+    return {
+        type: actionTypes.ADD_BOOK_TO_AUTHOR_START,
+    };
+};
+
+export const addBookToAuthorSuccess = (book) => {
+    return {
+        type: actionTypes.ADD_BOOK_TO_AUTHOR_SUCCESS,
+        book: book,
+    };
+};
+
+export const addBookToAuthorFail = (error) => {
+    return {
+        type: actionTypes.ADD_BOOK_TO_AUTHOR_FAIL,
+        error: error,
+    };
+};
+
+export const addBookToAuthor = (authorId, book) => {
+    return (dispatch) => {
+        dispatch(addBookToAuthorStart());
+
+        let config = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        };
+
+        axios
+            .post(`/authors/${authorId}/books`, book, config)
+            .then((res) => {
+                dispatch(addBookToAuthorSuccess(res.data));
+            })
+            .catch((err) => {
+                dispatch(addBookToAuthorFail(err));
+            });
+    };
+};

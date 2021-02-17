@@ -35,6 +35,10 @@ export {
     addAuthorStart,
     addAuthorSuccess,
     addAuthorFail,
+    addBookToAuthor,
+    addBookToAuthorStart,
+    addBookToAuthorSuccess,
+    addBookToAuthorFail,
 } from "./author";
 export {
     fetchBook,
@@ -45,6 +49,14 @@ export {
     addBookStart,
     addBookSuccess,
     addBookFail,
+    addAuthorToBook,
+    addAuthorToBookStart,
+    addAuthorToBookSuccess,
+    addAuthorToBookFail,
+    removeAuthorFromBook,
+    removeAuthorFromBookStart,
+    removeAuthorFromBookSuccess,
+    removeAuthorFromBookFail,
 } from "./book";
 export {
     authStart,
