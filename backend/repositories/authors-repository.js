@@ -49,6 +49,7 @@ const addBook = async (authorId, book) => {
     await db
         .insert({ isbn: book.isbn, author_id: authorId })
         .into("book_author");
+    return book;
 };
 
 module.exports = { getAll, getById, create, update, remove, getBooks, addBook };
