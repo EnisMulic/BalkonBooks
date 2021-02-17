@@ -15,7 +15,7 @@ const getById = async (req, res) => {
 };
 
 const create = async (req, res) => {
-    const book = booksRepository
+    booksRepository
         .create(req.body)
         .then((data) => {
             res.status(201).json(req.body);

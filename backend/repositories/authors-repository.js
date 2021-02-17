@@ -8,7 +8,11 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-    return await db.select().from(table).where({ id: id }).first();
+    let author = await db.select().from(table).where({ id: id }).first();
+    let books = await getBooks(id);
+
+    author.books = [...books];
+    return author;
 };
 
 const create = async (entity) => {

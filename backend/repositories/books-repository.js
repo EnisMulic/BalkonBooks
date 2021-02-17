@@ -10,7 +10,11 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-    return await db.select().from(table).where({ isbn: id }).first();
+    let book = await db.select().from(table).where({ isbn: id }).first();
+    let authors = await getAuthors(id);
+
+    book.authors = [...authors];
+    return book;
 };
 
 const create = async (entity) => {
