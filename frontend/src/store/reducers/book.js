@@ -43,7 +43,9 @@ const addAuthorToBookStart = (state, action) => {
 };
 
 const addAuthorToBookSuccess = (state, action) => {
-    return state.data.authors.push(action.author);
+    const authors = [...state.data.authors, action.author];
+    state.data = updateObject(state.data, { authors: authors });
+    return state;
 };
 
 const addAuthorToBookFail = (state, action) => {

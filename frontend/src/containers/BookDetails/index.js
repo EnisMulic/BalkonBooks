@@ -6,6 +6,7 @@ import * as actions from "../../store/actions";
 
 import style from "./BookDetails.module.css";
 import defaultBookImage from "../../assets/book-default.jpg";
+import AuthorList from "../../components/AuthorList";
 
 const BookDetails = () => {
     const { id } = useParams();
@@ -15,6 +16,15 @@ const BookDetails = () => {
     const onBookFetch = useCallback((id) => dispatch(actions.fetchBook(id)), [
         dispatch,
     ]);
+
+    const onAuthorAdd = useCallback(
+        (author) => dispatch(actions.addAuthorToBook(id, author)),
+        [dispatch]
+    );
+
+    const onAuthorDelete = useCallback((authorId) =>
+        dispatch(actions.removeAuthorFromBook(id, authorId))
+    );
 
     const bookData = useSelector((state) => state.book.data);
 
@@ -27,21 +37,31 @@ const BookDetails = () => {
     if (bookData !== null) {
         const { isbn, title, pages, published, image } = bookData;
         book = (
-            <div className={style.Book}>
-                <p className={style.Title}>{title}</p>
-                <img
-                    className={style.Image}
-                    src={image ? image : defaultBookImage}
-                />
-                <p>
-                    <strong>ISBN:</strong> {isbn}
-                </p>
-                <p>
-                    <strong>Pages:</strong> {pages}
-                </p>
-                <p>
-                    <strong>Published:</strong> {published}
-                </p>
+            <div className={style.Container}>
+                <div className={style.Book}>
+                    <p className={style.Title}>{title}</p>
+                    <img
+                        className={style.Image}
+                        src={image ? image : defaultBookImage}
+                    />
+                    <p>
+                        <strong>ISBN:</strong> {isbn}
+                    </p>
+                    <p>
+                        <strong>Pages:</strong> {pages}
+                    </p>
+                    <p>
+                        <strong>Published:</strong> {published}
+                    </p>
+                </div>
+                <div className={style.Authors}>
+                    <h4>Authors</h4>
+                    <AuthorList
+                        authors={bookData.authors}
+                        addMethod={onAuthorAdd}
+                        deleteMethod={onAuthorDelete}
+                    />
+                </div>
             </div>
         );
     }

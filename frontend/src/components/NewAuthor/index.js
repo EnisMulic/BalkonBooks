@@ -1,18 +1,8 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 
-import * as actions from "../../store/actions";
-
 const NewAuthor = (props) => {
-    const dispatch = useDispatch();
-
-    const onAuthorAdd = useCallback(
-        (author) => dispatch(actions.addAuthor(author)),
-        [dispatch]
-    );
-
     return (
         <div>
             <h3>Add new author</h3>
@@ -31,7 +21,7 @@ const NewAuthor = (props) => {
                     return errors;
                 }}
                 onSubmit={(values) => {
-                    onAuthorAdd(values);
+                    props.addMethod(values);
                     props.onSuccess();
                 }}
             >

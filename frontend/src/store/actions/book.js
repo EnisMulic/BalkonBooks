@@ -149,7 +149,7 @@ export const removeAuthorFromBook = (bookId, authorId) => {
         };
 
         axios
-            .post(`/books/${bookId}/authors/${authorId}`, config)
+            .delete(`/books/${bookId}/authors/${authorId}`, config)
             .then((res) => {
                 dispatch(removeAuthorFromBookSuccess(bookId, authorId));
             })

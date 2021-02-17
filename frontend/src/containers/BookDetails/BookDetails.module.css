@@ -1,5 +1,10 @@
+.Container {
+    display: flex;
+}
+
 .Book {
     padding: 30px 40px;
+    width: 30%;
 }
 
 .Book p {
@@ -15,4 +20,16 @@
 .Image {
     height: 450px;
     width: 350px;
+}
+
+.Authors {
+    width: 70%;
+    padding: 2rem 4rem;
+}
+
+@media (max-width: 1200px) {
+    .Container {
+        display: flex;
+        flex-direction: column;
+    }
 }
