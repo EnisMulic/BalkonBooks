@@ -14,16 +14,16 @@ const login = async (req, res) => {
     const user = await userRepository.getByEmail(req.body.email);
 
     if (user === undefined) {
-        res.status(404).json({ error: "Email does not exist!" });
+        return res.status(404).json({ error: "Email does not exist!" });
     }
 
     const correctPassword = await bcrypt.compare(req.body.password, user.hash);
 
     if (!correctPassword) {
-        res.status(400).json({ error: "Wrong password" });
+        return res.status(400).json({ error: "Wrong password" });
     } else {
         const token = generateAuthToken(user);
-        res.status(200).json({ token: token });
+        return res.status(200).json({ token: token });
     }
 };
 

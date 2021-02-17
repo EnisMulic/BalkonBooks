@@ -22,7 +22,7 @@ const create = async (req, res) => {
             res.status(201).json(req.body);
         })
         .catch((error) => {
-            res.status(500);
+            res.status(500).json();
         });
 };
 
@@ -30,9 +30,9 @@ const update = async (req, res) => {
     const count = await authorsRepository.update(req.params.id, req.body);
 
     if (count !== 0) {
-        res.status(200).json();
+        return res.status(200).json();
     } else {
-        res.status(404).json();
+        return res.status(404).json();
     }
 };
 
@@ -40,9 +40,9 @@ const remove = async (req, res) => {
     const count = await authorsRepository.remove(req.params.id);
 
     if (count !== 0) {
-        res.status(200).json();
+        return res.status(200).json();
     } else {
-        res.status(404).json();
+        return res.status(404).json();
     }
 };
 
@@ -71,9 +71,9 @@ const removeAuthorFromBook = async (req, res) => {
     );
 
     if (count !== 0) {
-        res.status(200).json();
+        return res.status(200).json();
     } else {
-        res.status(404).json();
+        return res.status(404).json();
     }
 };
 
