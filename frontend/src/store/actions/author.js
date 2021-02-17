@@ -118,3 +118,45 @@ export const addBookToAuthor = (authorId, book) => {
             });
     };
 };
+
+export const removeBookFromAuthorStart = () => {
+    return {
+        type: actionTypes.REMOVE_BOOK_FROM_AUTHOR_START,
+    };
+};
+
+export const removeBookFromAuthorSuccess = (authorId, bookId) => {
+    return {
+        type: actionTypes.REMOVE_BOOK_FROM_AUTHOR_SUCCESS,
+        bookId: bookId,
+        authorId: authorId,
+    };
+};
+
+export const removeBookFromAuthorFail = (error) => {
+    return {
+        type: actionTypes.REMOVE_BOOK_FROM_AUTHOR_FAIL,
+        error: error,
+    };
+};
+
+export const removeBookFromAuthor = (authorId, bookId) => {
+    return (dispatch) => {
+        dispatch(removeBookFromAuthorStart());
+
+        let config = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        };
+
+        axios
+            .delete(`/authors/${authorId}/books/${bookId}`, config)
+            .then((res) => {
+                dispatch(removeBookFromAuthorSuccess(authorId, bookId));
+            })
+            .catch((err) => {
+                dispatch(removeBookFromAuthorFail(err));
+            });
+    };
+};

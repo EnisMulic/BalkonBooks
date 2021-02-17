@@ -7,6 +7,7 @@ import * as actions from "../../store/actions";
 import style from "./AuthorDetails.module.css";
 
 import defaultAuthorImage from "../../assets/author-default.png";
+import BookList from "../../components/BookList";
 
 const AuthorDetails = () => {
     const { id } = useParams();
@@ -16,6 +17,15 @@ const AuthorDetails = () => {
     const onAuthorFetch = useCallback(
         (id) => dispatch(actions.fetchAuthor(id)),
         [dispatch]
+    );
+
+    const onBookAdd = useCallback(
+        (book) => dispatch(actions.addBookToAuthor(id, book)),
+        [dispatch]
+    );
+
+    const onBookDelete = useCallback((bookId) =>
+        dispatch(actions.removeBookFromAuthor(id, bookId))
     );
 
     const authorData = useSelector((state) => state.author.data);
@@ -31,18 +41,28 @@ const AuthorDetails = () => {
     if (authorData !== null) {
         const { firstName, lastName, dob, image } = authorData;
         author = (
-            <div className={style.Author}>
-                <p className={style.Name}>
-                    {firstName} {lastName}
-                </p>
-                <img
-                    className={style.Image}
-                    src={image ? image : defaultAuthorImage}
-                />
-                <p>
-                    <strong>Born</strong>{" "}
-                    {new Date(dob).toLocaleString("en-Us", dateOptions)}
-                </p>
+            <div className={style.Container}>
+                <div className={style.Author}>
+                    <p className={style.Name}>
+                        {firstName} {lastName}
+                    </p>
+                    <img
+                        className={style.Image}
+                        src={image ? image : defaultAuthorImage}
+                    />
+                    <p>
+                        <strong>Born</strong>{" "}
+                        {new Date(dob).toLocaleString("en-Us", dateOptions)}
+                    </p>
+                </div>
+                <div className={style.Books}>
+                    <h4>Books</h4>
+                    <BookList
+                        books={authorData.books}
+                        addMethod={onBookAdd}
+                        deleteMethod={onBookDelete}
+                    />
+                </div>
             </div>
         );
     }

@@ -39,6 +39,10 @@ export {
     addBookToAuthorStart,
     addBookToAuthorSuccess,
     addBookToAuthorFail,
+    removeBookFromAuthor,
+    removeBookFromAuthorStart,
+    removeBookFromAuthorSuccess,
+    removeBookFromAuthorFail,
 } from "./author";
 export {
     fetchBook,

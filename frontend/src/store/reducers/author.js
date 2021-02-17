@@ -43,10 +43,30 @@ const addBookToAuthorStart = (state, action) => {
 };
 
 const addBookToAuthorSuccess = (state, action) => {
-    return state.data.books.push(action.book);
+    const books = [...state.data.books, action.book];
+    state.data = updateObject(state.data, { books: books });
+    return state;
 };
 
 const addBookToAuthorFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+    });
+};
+
+const removeBookFromAuthorStart = (state, action) => {
+    return state;
+};
+
+const removeBookFromAuthorSuccess = (state, action) => {
+    const books = state.data.books.filter(
+        (book) => book.isbn !== action.bookId
+    );
+    state.data = updateObject(state.data, { books: books });
+    return state;
+};
+
+const removeBookFromAuthorFail = (state, action) => {
     return updateObject(state, {
         error: action.error,
     });
@@ -72,6 +92,12 @@ const reducer = (state = initialState, action) => {
             return addBookToAuthorSuccess(state, action);
         case actionTypes.ADD_BOOK_TO_AUTHOR_FAIL:
             return addBookToAuthorFail(state, action);
+        case actionTypes.REMOVE_BOOK_FROM_AUTHOR_START:
+            return removeBookFromAuthorStart(state, action);
+        case actionTypes.REMOVE_BOOK_FROM_AUTHOR_SUCCESS:
+            return removeBookFromAuthorSuccess(state, action);
+        case actionTypes.REMOVE_BOOK_FROM_AUTHOR_FAIL:
+            return removeBookFromAuthorFail(state, action);
         default:
             return state;
     }

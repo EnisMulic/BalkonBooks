@@ -8,10 +8,6 @@ import * as actions from "../../store/actions";
 const NewBook = (props) => {
     const dispatch = useDispatch();
 
-    const onBookAdd = useCallback((book) => dispatch(actions.addBook(book)), [
-        dispatch,
-    ]);
-
     const error = useSelector((state) => state.book.error);
 
     return (
@@ -42,7 +38,7 @@ const NewBook = (props) => {
                     return errors;
                 }}
                 onSubmit={(values) => {
-                    onBookAdd(values);
+                    props.addMethod(values);
                     props.onSuccess();
                 }}
             >
