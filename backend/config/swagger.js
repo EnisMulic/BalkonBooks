@@ -8,5 +8,5 @@ module.exports = swaggerOptions = {
         },
         tags: [{ name: "books" }, { name: "authors" }, { name: "auth" }],
     },
-    apis: ["./routes/*.js"],
+    apis: ["./controllers/*.js"],
 };
