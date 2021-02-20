@@ -1,14 +1,12 @@
 const db = require("../database/knex");
 
-const table = "author";
-
 const getAll = async () => {
-    const books = await db(table);
+    const books = await db("author");
     return books;
 };
 
 const getById = async (id) => {
-    let author = await db.select().from(table).where({ id: id }).first();
+    let author = await db("author").where({ id: id }).first();
     let books = await getBooks(id);
 
     author.books = [...books];
@@ -16,11 +14,11 @@ const getById = async (id) => {
 };
 
 const create = async (entity) => {
-    return await db.insert(entity).into(table);
+    return await db("author").insert(entity).into(table);
 };
 
 const update = async (id, entity) => {
-    return await db(table)
+    return await db("author")
         .where({ id: id })
         .update({
             firstName: entity.firstName || null,
@@ -31,24 +29,19 @@ const update = async (id, entity) => {
 };
 
 const remove = async (id) => {
-    return await db.select().from(table).where({ id: id }).del();
+    return await db("author").where({ id: id }).del();
 };
 
 const getBooks = async (id) => {
-    return await db
-        .select()
-        .from("book")
-        .whereIn(
-            "isbn",
-            db("book_author").select("isbn").where("author_id", id)
-        );
+    return await db("book").whereIn(
+        "isbn",
+        db("book_author").select("isbn").where("author_id", id)
+    );
 };
 
 const addBook = async (authorId, book) => {
-    await db.insert(book).into("book");
-    await db
-        .insert({ isbn: book.isbn, author_id: authorId })
-        .into("book_author");
+    await db("book").insert(book);
+    await db("book_author").insert({ isbn: book.isbn, author_id: authorId });
     return book;
 };
 
