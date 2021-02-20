@@ -9,11 +9,20 @@ const booksRepository = require("../repositories/books-repository");
  * @swagger
  * /api/books:
  *   get:
- *       tags:
- *          - books
- *       responses:
- *           '200':
- *                  description: get list of books
+ *     tags:
+ *     - books
+ *     responses:
+ *       200:
+ *         description: get list of books
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Book'
  */
 router.get("/", async (req, res) => {
     booksRepository.getAll().then((data) => res.status(200).json(data));
@@ -32,10 +41,17 @@ router.get("/", async (req, res) => {
  *          schema:
  *            type: string
  *       responses:
- *           '200':
- *                  description: get single book
- *           '404':
- *                  description: not found
+ *           200:
+ *             description: get single book
+ *             content:
+ *               application/json:
+ *                 schema:
+ *                   type: object
+ *                   properties:
+ *                     data:
+ *                       $ref: '#/components/schemas/Book'
+ *           404:
+ *             description: not found
  */
 router.get("/:id", async (req, res) => {
     const book = await booksRepository.getById(req.params.id);
@@ -51,11 +67,24 @@ router.get("/:id", async (req, res) => {
  * @swagger
  * /api/books:
  *   post:
- *       tags:
- *          - books
- *       responses:
- *           '201':
- *                  description: create new book
+ *    tags:
+ *      - books
+ *    requestBody:
+ *      required: true
+ *      content:
+ *          application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Book'
+ *    responses:
+ *      201:
+ *        description: create new book
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                data:
+ *                  $ref: '#/components/schemas/Book'
  */
 router.post("/", authenticateToken, async (req, res) => {
     booksRepository
@@ -80,11 +109,17 @@ router.post("/", authenticateToken, async (req, res) => {
  *          required: true
  *          schema:
  *            type: string
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Book'
  *       responses:
- *           '200':
- *                  description: update book
- *           '404':
- *                  description: not found
+ *           200:
+ *              description: update book
+ *           404:
+ *              description: not found
  */
 router.put("/:id", authenticateToken, async (req, res) => {
     const count = await booksRepository.update(req.params.id, req.body);
@@ -109,10 +144,10 @@ router.put("/:id", authenticateToken, async (req, res) => {
  *          schema:
  *            type: string
  *       responses:
- *           '200':
- *                  description: delete book
- *           '404':
- *                  description: not found
+ *           200:
+ *             description: delete book
+ *           404:
+ *             description: not found
  */
 router.delete("/:id", authenticateToken, async (req, res) => {
     const count = await booksRepository.remove(req.params.id);
@@ -128,19 +163,28 @@ router.delete("/:id", authenticateToken, async (req, res) => {
  * @swagger
  * /api/books/{id}/authors:
  *   get:
- *       tags:
- *          - books
- *       parameters:
- *        - in: path
- *          name: id
- *          required: true
- *          schema:
- *            type: string
- *       responses:
- *           '200':
- *                  description: get list of authors for {id} book
- *           '404':
- *                  description: not found book
+ *     tags:
+ *     - books
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: get list of authors for {id} book
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Author'
+ *       404:
+ *          description: not found book
  */
 router.get("/:id/authors", async (req, res) => {
     booksRepository
@@ -155,19 +199,25 @@ router.get("/:id/authors", async (req, res) => {
  * @swagger
  * /api/books/{id}/authors:
  *   post:
- *       tags:
- *          - books
- *       parameters:
- *        - in: path
- *          name: id
- *          required: true
- *          schema:
- *            type: string
- *       responses:
- *           '200':
- *                  description: add new author to {id} book
- *           '404':
- *                  description: not found book
+ *    tags:
+ *      - books
+ *    parameters:
+ *    - in: path
+ *      name: id
+ *      required: true
+ *      schema:
+ *        type: string
+ *    requestBody:
+ *      required: true
+ *      content:
+ *          application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/NewAuthor'
+ *    responses:
+ *      200:
+ *        description: add new author to {id} book
+ *      404:
+ *        description: not found book
  */
 router.post("/:id/authors", authenticateToken, async (req, res) => {
     booksRepository
@@ -195,11 +245,12 @@ router.post("/:id/authors", authenticateToken, async (req, res) => {
  *          required: true
  *          schema:
  *            type: string
+ *            format: guid
  *       responses:
- *           '200':
- *                  description: delete {idAuthor} author from {idBook} book
- *           '404':
- *                  description: not found book or author
+ *           200:
+ *             description: delete {idAuthor} author from {idBook} book
+ *           404:
+ *             description: not found book or author
  */
 router.delete(
     "/:idBook/authors/:idAuthor",

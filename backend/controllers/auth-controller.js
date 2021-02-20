@@ -10,10 +10,21 @@ const generateAuthToken = require("../utils/auth-token");
  * /api/auth/register:
  *   post:
  *       tags:
- *          - auth
+ *       - auth
+ *       parameters:
+ *       - in: requestBody
+ *         name: email
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: requestBody
+ *         name: password
+ *         required: true
+ *         schema:
+ *           type: string
  *       responses:
- *           '200':
- *               description: A successful response
+ *           200:
+ *              description: A successful response
  */
 router.post("/register", async (req, res) => {
     userRepository
@@ -27,10 +38,21 @@ router.post("/register", async (req, res) => {
  * /api/auth/login:
  *   post:
  *       tags:
- *          - auth
+ *       - auth
+ *       parameters:
+ *       - in: requestBody
+ *         name: email
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: requestBody
+ *         name: password
+ *         required: true
+ *         schema:
+ *           type: string
  *       responses:
- *           '200':
- *               description: A successful response
+ *           200:
+ *              description: A successful response
  */
 router.post("/login", async (req, res) => {
     const user = await userRepository.getByEmail(req.body.email);
