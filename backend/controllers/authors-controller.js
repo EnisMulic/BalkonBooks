@@ -48,9 +48,14 @@ router.get("/", async (req, res) => {
  *               application/json:
  *                 schema:
  *                   type: object
- *                   properties:
- *                     data:
- *                       $ref: '#/components/schemas/Author'
+ *                   allOf:
+ *                   - $ref: '#/components/schemas/Author'
+ *                   - type: object
+ *                     properties:
+ *                        books:
+ *                          type: array
+ *                          items:
+ *                           $ref: '#/components/schemas/Book'
  *           404:
  *             description: not found
  */
