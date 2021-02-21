@@ -1,14 +1,9 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 
-import * as actions from "../../store/actions";
-
 const NewBook = (props) => {
-    const dispatch = useDispatch();
-
-    const error = useSelector((state) => state.book.error);
+    // const error = useSelector((state) => state.book.error);
 
     return (
         <div>

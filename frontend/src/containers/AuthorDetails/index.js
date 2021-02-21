@@ -49,6 +49,11 @@ const AuthorDetails = () => {
                     <img
                         className={style.Image}
                         src={image ? image : defaultAuthorImage}
+                        alt={
+                            image
+                                ? `${firstName} ${lastName}`
+                                : "Default image for an author"
+                        }
                     />
                     <p>
                         <strong>Born</strong>{" "}

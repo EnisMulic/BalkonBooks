@@ -43,6 +43,11 @@ const BookDetails = () => {
                     <img
                         className={style.Image}
                         src={image ? image : defaultBookImage}
+                        alt={
+                            image
+                                ? `Book cover for ${title}`
+                                : "Default book cover"
+                        }
                     />
                     <p>
                         <strong>ISBN:</strong> {isbn}
