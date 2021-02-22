@@ -1,8 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
 const db = require("../database/knex");
 
-const getAll = async () => {
-    const books = await db("book");
+const getAll = async (page, amount) => {
+    const books = await db("book").paginate({
+        perPage: amount,
+        currentPage: page,
+    });
     return books;
 };
 
@@ -10,7 +13,7 @@ const getById = async (id) => {
     let book = await db("book").where({ isbn: id }).first();
     let authors = await getAuthors(id);
 
-    book.authors = [...authors];
+    book.authors = [...authors.data];
     return book;
 };
 
@@ -33,11 +36,13 @@ const remove = async (id) => {
     return await db("book").where({ isbn: id }).del();
 };
 
-const getAuthors = async (id) => {
-    return await db("author").whereIn(
-        "id",
-        db("book_author").select("author_id").where("isbn", id)
-    );
+const getAuthors = async (id, page, amount) => {
+    return await db("author")
+        .whereIn("id", db("book_author").select("author_id").where("isbn", id))
+        .paginate({
+            perPage: amount,
+            currentPage: page,
+        });
 };
 
 const addAuthor = async (bookId, author) => {

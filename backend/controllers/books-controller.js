@@ -11,6 +11,13 @@ const booksRepository = require("../repositories/books-repository");
  *   get:
  *     tags:
  *     - books
+ *     parameters:
+ *     - in: query
+ *       name: page
+ *       type: integer
+ *     - in: query
+ *       name: amount
+ *       type: integer
  *     responses:
  *       200:
  *         description: get list of books
@@ -25,7 +32,9 @@ const booksRepository = require("../repositories/books-repository");
  *                     $ref: '#/components/schemas/Book'
  */
 router.get("/", async (req, res) => {
-    booksRepository.getAll().then((data) => res.status(200).json(data));
+    booksRepository
+        .getAll(req.query.page, req.query.amount)
+        .then((data) => res.status(200).json(data));
 });
 
 /**
@@ -176,6 +185,12 @@ router.delete("/:id", authenticateToken, async (req, res) => {
  *       required: true
  *       schema:
  *         type: string
+ *     - in: query
+ *       name: page
+ *       type: integer
+ *     - in: query
+ *       name: amount
+ *       type: integer
  *     responses:
  *       200:
  *         description: get list of authors for {id} book
@@ -193,7 +208,7 @@ router.delete("/:id", authenticateToken, async (req, res) => {
  */
 router.get("/:id/authors", async (req, res) => {
     booksRepository
-        .getAuthors(req.params.id)
+        .getAuthors(req.params.id, req.query.page, req.query.amount)
         .then((data) => res.status(200).json(data))
         .catch((error) => {
             res.status(404).json();
