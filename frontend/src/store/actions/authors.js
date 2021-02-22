@@ -28,9 +28,9 @@ export const fetchAuthors = () => {
             .get("/authors")
             .then((res) => {
                 const fetchedAuthors = [];
-                for (let key in res.data) {
+                for (let key in res.data.data) {
                     fetchedAuthors.push({
-                        ...res.data[key],
+                        ...res.data.data[key],
                     });
                 }
                 dispatch(fetchAuthorsSuccess(fetchedAuthors));

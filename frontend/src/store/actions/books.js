@@ -28,9 +28,9 @@ export const fetchBooks = () => {
             .get("/books")
             .then((res) => {
                 const fetchedBooks = [];
-                for (let key in res.data) {
+                for (let key in res.data.data) {
                     fetchedBooks.push({
-                        ...res.data[key],
+                        ...res.data.data[key],
                         id: key,
                     });
                 }
