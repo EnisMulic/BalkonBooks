@@ -13,9 +13,10 @@ const BookDetails = () => {
 
     const dispatch = useDispatch();
 
-    const onBookFetch = useCallback((id) => dispatch(actions.fetchBook(id)), [
-        dispatch,
-    ]);
+    const onBookFetch = useCallback(
+        (id, page, amount) => dispatch(actions.fetchBook(id, page, amount)),
+        [dispatch]
+    );
 
     const onAuthorAdd = useCallback(
         (author) => dispatch(actions.addAuthorToBook(id, author)),
@@ -63,6 +64,7 @@ const BookDetails = () => {
                     <h4>Authors</h4>
                     <AuthorList
                         authors={bookData.authors}
+                        getMethod={onBookFetch}
                         addMethod={onAuthorAdd}
                         deleteMethod={onAuthorDelete}
                     />

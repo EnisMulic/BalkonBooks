@@ -7,10 +7,11 @@ export const fetchAuthorsStart = () => {
     };
 };
 
-export const fetchAuthorsSuccess = (authors) => {
+export const fetchAuthorsSuccess = (authors, pagination) => {
     return {
         type: actionTypes.FETCH_AUTHORS_SUCCESS,
         authors: authors,
+        pagination: pagination,
     };
 };
 
@@ -21,11 +22,17 @@ export const fetchAuthorsFail = (error) => {
     };
 };
 
-export const fetchAuthors = () => {
+export const fetchAuthors = (page, amount) => {
     return (dispatch) => {
         dispatch(fetchAuthorsStart());
+
+        const params = new URLSearchParams({
+            page: page,
+            amount: amount,
+        }).toString();
+
         axios
-            .get("/authors")
+            .get("/authors?" + params)
             .then((res) => {
                 const fetchedAuthors = [];
                 for (let key in res.data.data) {
@@ -33,7 +40,9 @@ export const fetchAuthors = () => {
                         ...res.data.data[key],
                     });
                 }
-                dispatch(fetchAuthorsSuccess(fetchedAuthors));
+                dispatch(
+                    fetchAuthorsSuccess(fetchedAuthors, res.data.pagination)
+                );
             })
             .catch((err) => {
                 dispatch(fetchAuthorsFail(err));
