@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -11,9 +11,11 @@ import style from "./Books.module.css";
 const Books = () => {
     const amount = 10;
     const dispatch = useDispatch();
+    const [search, setSearch] = useState("");
 
     const onBooksFetch = useCallback(
-        (page, amount) => dispatch(actions.fetchBooks(page, amount)),
+        (search, page, amount) =>
+            dispatch(actions.fetchBooks(search, page, amount)),
         [dispatch]
     );
 
@@ -30,6 +32,7 @@ const Books = () => {
 
     const getNext = () => {
         onBooksFetch(
+            search,
             parseInt(pagination.currentPage) + 1 || 1,
             pagination.perPage || amount
         );
@@ -39,8 +42,22 @@ const Books = () => {
         getNext();
     }, [onBooksFetch]);
 
+    const onSeachChange = (event) => {
+        setSearch(event.target.value);
+        onBooksFetch(event.target.value, 1, amount);
+    };
+
     return (
         <div className={style.Container}>
+            <div className="form-group">
+                <label>Title: </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    value={search}
+                    onChange={(event) => onSeachChange(event)}
+                ></input>
+            </div>
             <InfiniteScroll
                 dataLength={books.length}
                 next={getNext}

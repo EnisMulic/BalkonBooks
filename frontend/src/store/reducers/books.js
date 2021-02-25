@@ -6,6 +6,7 @@ const initialState = {
     pagination: {},
     loading: false,
     error: null,
+    search: null,
 };
 
 const fetchBooksStart = (state, action) => {
@@ -13,11 +14,19 @@ const fetchBooksStart = (state, action) => {
 };
 
 const fetchBooksSuccess = (state, action) => {
-    const books = [...state.data, ...action.books];
+    let books = [];
+
+    if (state.search !== action.search) {
+        books = [...action.books];
+    } else {
+        books = [...state.data, ...action.books];
+    }
+
     return updateObject(state, {
         data: books,
         pagination: action.pagination,
         loading: false,
+        search: action.search,
     });
 };
 

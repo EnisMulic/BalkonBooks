@@ -13,6 +13,9 @@ const booksRepository = require("../repositories/books-repository");
  *     - books
  *     parameters:
  *     - in: query
+ *       name: title
+ *       type: string
+ *     - in: query
  *       name: page
  *       type: integer
  *     - in: query
@@ -33,7 +36,7 @@ const booksRepository = require("../repositories/books-repository");
  */
 router.get("/", async (req, res) => {
     booksRepository
-        .getAll(req.query.page, req.query.amount)
+        .getAll(req.query.title, req.query.page, req.query.amount)
         .then((data) => res.status(200).json(data));
 });
 

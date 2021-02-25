@@ -1,11 +1,18 @@
 const { v4: uuidv4 } = require("uuid");
 const db = require("../database/knex");
 
-const getAll = async (page, amount) => {
-    const books = await db("book").paginate({
+const getAll = async (title, page, amount) => {
+    let dbSet = db("book");
+
+    if (typeof title !== "undefined") {
+        dbSet = dbSet.where("title", "like", `%${title}%`);
+    }
+
+    const books = await dbSet.paginate({
         perPage: amount,
         currentPage: page,
     });
+
     return books;
 };
 

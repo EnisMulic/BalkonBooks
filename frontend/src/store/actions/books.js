@@ -7,11 +7,12 @@ export const fetchBooksStart = () => {
     };
 };
 
-export const fetchBooksSuccess = (books, pagination) => {
+export const fetchBooksSuccess = (books, pagination, search) => {
     return {
         type: actionTypes.FETCH_BOOKS_SUCCESS,
         books: books,
         pagination: pagination,
+        search: search,
     };
 };
 
@@ -22,17 +23,21 @@ export const fetchBooksFail = (error) => {
     };
 };
 
-export const fetchBooks = (page, amount) => {
+export const fetchBooks = (search, page, amount) => {
     return (dispatch) => {
         dispatch(fetchBooksStart());
 
-        const params = new URLSearchParams({
+        let searchParams = new URLSearchParams({
             page: page,
             amount: amount,
-        }).toString();
+        });
+
+        if (search) {
+            searchParams.append("title", search);
+        }
 
         axios
-            .get("/books?" + params)
+            .get("/books?" + searchParams.toString())
             .then((res) => {
                 const fetchedBooks = [];
                 for (let key in res.data.data) {
@@ -42,7 +47,9 @@ export const fetchBooks = (page, amount) => {
                     });
                 }
 
-                dispatch(fetchBooksSuccess(fetchedBooks, res.data.pagination));
+                dispatch(
+                    fetchBooksSuccess(fetchedBooks, res.data.pagination, search)
+                );
             })
             .catch((err) => {
                 dispatch(fetchBooksFail(err));
