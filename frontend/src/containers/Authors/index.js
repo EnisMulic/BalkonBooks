@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -10,9 +10,11 @@ import AuthorList from "../../components/AuthorList";
 const Authors = () => {
     const amount = 10;
     const dispatch = useDispatch();
+    const [search, setSearch] = useState("");
 
     const onAuthorsFetch = useCallback(
-        (page, amount) => dispatch(actions.fetchAuthors(page, amount)),
+        (search, page, amount) =>
+            dispatch(actions.fetchAuthors(search, page, amount)),
         [dispatch]
     );
 
@@ -31,6 +33,7 @@ const Authors = () => {
 
     const getNext = () => {
         onAuthorsFetch(
+            search,
             parseInt(pagination.currentPage) + 1 || 1,
             pagination.perPage || amount
         );
@@ -40,8 +43,22 @@ const Authors = () => {
         getNext();
     }, [onAuthorsFetch]);
 
+    const onSeachChange = (event) => {
+        setSearch(event.target.value);
+        onAuthorsFetch(event.target.value, 1, amount);
+    };
+
     return (
         <div className={style.Container}>
+            <div className="form-group">
+                <label>Author: </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    value={search}
+                    onChange={(event) => onSeachChange(event)}
+                ></input>
+            </div>
             <InfiniteScroll
                 dataLength={authors.length}
                 next={getNext}

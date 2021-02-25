@@ -13,11 +13,19 @@ const fetchAuthorsStart = (state, action) => {
 };
 
 const fetchAuthorsSuccess = (state, action) => {
-    const authors = [...state.data, ...action.authors];
+    let authors = [];
+
+    if (state.search !== action.search) {
+        authors = [...action.authors];
+    } else {
+        authors = [...state.data, ...action.authors];
+    }
+
     return updateObject(state, {
         data: authors,
         pagination: action.pagination,
         loading: false,
+        search: action.search,
     });
 };
 

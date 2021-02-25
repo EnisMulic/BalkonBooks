@@ -1,11 +1,20 @@
 const db = require("../database/knex");
 
-const getAll = async (page, amount) => {
-    const books = await db("author").paginate({
+const getAll = async (firstName, lastName, page, amount) => {
+    let dbSet = db("author");
+
+    if (typeof firstName !== "undefined" || typeof lastName !== "undefined") {
+        dbSet = dbSet
+            .where("firstName", "like", `%${firstName}%`)
+            .orWhere("lastName", "like", `%${lastName}%`);
+    }
+
+    const authors = await dbSet.paginate({
         perPage: amount,
         currentPage: page,
     });
-    return books;
+
+    return authors;
 };
 
 const getById = async (id) => {

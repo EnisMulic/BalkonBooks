@@ -14,6 +14,12 @@ const booksRepository = require("../repositories/books-repository");
  *     - authors
  *     parameters:
  *     - in: query
+ *       name: firstName
+ *       type: string
+ *     - in: query
+ *       name: lastName
+ *       type: string
+ *     - in: query
  *       name: page
  *       type: integer
  *     - in: query
@@ -34,7 +40,12 @@ const booksRepository = require("../repositories/books-repository");
  */
 router.get("/", async (req, res) => {
     authorsRepository
-        .getAll(req.query.page, req.query.amount)
+        .getAll(
+            req.query.firstName,
+            req.query.lastName,
+            req.query.page,
+            req.query.amount
+        )
         .then((data) => res.status(200).json(data));
 });
 
