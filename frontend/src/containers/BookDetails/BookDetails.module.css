@@ -1,35 +1,58 @@
 .Container {
     display: flex;
+    align-items: flex-start;
 }
 
 .Book {
-    padding: 30px 40px;
-    width: 30%;
+    margin: 40px 50px;
+    width: 370px;
+    box-shadow: 8px 8px 2px 1px rgba(141, 139, 139, 0.205);
 }
 
-.Book p {
-    padding: 0;
-    margin: 0;
+.Info {
+    width: 370px;
+    border: 1px solid gray;
+}
+
+.Info p {
+    margin: 0.5rem;
+    line-height: 1.2rem;
 }
 
 .Title {
+    margin: 1rem;
     font-size: 20px;
     font-weight: bold;
+    text-align: center;
 }
 
 .Image {
     height: 450px;
-    width: 350px;
+    width: 370px;
+    border: 1px solid gray;
 }
 
 .Authors {
     width: 70%;
-    padding: 2rem 4rem;
+    padding: 1.5rem;
+}
+
+.Authors > h4 {
+    margin: 1rem;
+    padding: 1rem;
+    width: auto;
+    border: 1px solid gray;
+    box-shadow: 8px 8px 2px 1px rgba(141, 139, 139, 0.205);
 }
 
 @media (max-width: 1200px) {
     .Container {
         display: flex;
         flex-direction: column;
+    }
+
+    .Book,
+    .Authors {
+        margin: 40px auto;
     }
 }

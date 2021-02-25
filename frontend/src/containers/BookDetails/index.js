@@ -40,7 +40,6 @@ const BookDetails = () => {
         book = (
             <div className={style.Container}>
                 <div className={style.Book}>
-                    <p className={style.Title}>{title}</p>
                     <img
                         className={style.Image}
                         src={image ? image : defaultBookImage}
@@ -50,15 +49,18 @@ const BookDetails = () => {
                                 : "Default book cover"
                         }
                     />
-                    <p>
-                        <strong>ISBN:</strong> {isbn}
-                    </p>
-                    <p>
-                        <strong>Pages:</strong> {pages}
-                    </p>
-                    <p>
-                        <strong>Published:</strong> {published}
-                    </p>
+                    <div className={style.Info}>
+                        <p className={style.Title}>{title}</p>
+                        <p>
+                            <strong>ISBN:</strong> {isbn}
+                        </p>
+                        <p>
+                            <strong>Pages:</strong> {pages}
+                        </p>
+                        <p>
+                            <strong>Published:</strong> {published}
+                        </p>
+                    </div>
                 </div>
                 <div className={style.Authors}>
                     <h4>Authors</h4>
