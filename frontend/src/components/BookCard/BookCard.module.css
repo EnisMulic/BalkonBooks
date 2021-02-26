@@ -1,0 +1,50 @@
+.Link,
+.Link:hover {
+    text-decoration: none !important;
+    color: black;
+    display: inherit;
+}
+
+.BookCard {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    box-shadow: 8px 8px 2px 1px rgba(141, 139, 139, 0.205);
+    text-decoration: none;
+    margin: 1rem;
+    cursor: pointer;
+    padding: 7px 0;
+}
+
+.BookCard:hover {
+    transform: scale(1.02);
+}
+
+.ImageWrapper {
+    width: 60px;
+    height: 85px;
+    margin: 0.5rem;
+}
+
+.ImageWrapper img {
+    width: 60px;
+    height: 85px;
+}
+
+.Info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 7px;
+}
+
+.Actions {
+    border-top: 1px solid gray;
+    padding: 0.4rem;
+}
+
+.Action {
+    margin: 0.2rem;
+    width: 5rem;
+    padding: 0.2rem;
+}

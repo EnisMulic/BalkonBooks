@@ -43,17 +43,24 @@ const AuthorDetails = () => {
         author = (
             <div className={style.Container}>
                 <div className={style.Author}>
-                    <p className={style.Name}>
-                        {firstName} {lastName}
-                    </p>
                     <img
                         className={style.Image}
                         src={image ? image : defaultAuthorImage}
+                        alt={
+                            image
+                                ? `${firstName} ${lastName}`
+                                : "Default image for an author"
+                        }
                     />
-                    <p>
-                        <strong>Born</strong>{" "}
-                        {new Date(dob).toLocaleString("en-Us", dateOptions)}
-                    </p>
+                    <div className={style.Info}>
+                        <p className={style.Name}>
+                            {firstName} {lastName}
+                        </p>
+                        <p>
+                            <strong>Born</strong>{" "}
+                            {new Date(dob).toLocaleString("en-Us", dateOptions)}
+                        </p>
+                    </div>
                 </div>
                 <div className={style.Books}>
                     <h4>Books</h4>

@@ -13,9 +13,10 @@ const BookDetails = () => {
 
     const dispatch = useDispatch();
 
-    const onBookFetch = useCallback((id) => dispatch(actions.fetchBook(id)), [
-        dispatch,
-    ]);
+    const onBookFetch = useCallback(
+        (id, page, amount) => dispatch(actions.fetchBook(id, page, amount)),
+        [dispatch]
+    );
 
     const onAuthorAdd = useCallback(
         (author) => dispatch(actions.addAuthorToBook(id, author)),
@@ -39,25 +40,33 @@ const BookDetails = () => {
         book = (
             <div className={style.Container}>
                 <div className={style.Book}>
-                    <p className={style.Title}>{title}</p>
                     <img
                         className={style.Image}
                         src={image ? image : defaultBookImage}
+                        alt={
+                            image
+                                ? `Book cover for ${title}`
+                                : "Default book cover"
+                        }
                     />
-                    <p>
-                        <strong>ISBN:</strong> {isbn}
-                    </p>
-                    <p>
-                        <strong>Pages:</strong> {pages}
-                    </p>
-                    <p>
-                        <strong>Published:</strong> {published}
-                    </p>
+                    <div className={style.Info}>
+                        <p className={style.Title}>{title}</p>
+                        <p>
+                            <strong>ISBN:</strong> {isbn}
+                        </p>
+                        <p>
+                            <strong>Pages:</strong> {pages}
+                        </p>
+                        <p>
+                            <strong>Published:</strong> {published}
+                        </p>
+                    </div>
                 </div>
                 <div className={style.Authors}>
                     <h4>Authors</h4>
                     <AuthorList
                         authors={bookData.authors}
+                        getMethod={onBookFetch}
                         addMethod={onAuthorAdd}
                         deleteMethod={onAuthorDelete}
                     />

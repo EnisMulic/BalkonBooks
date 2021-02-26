@@ -3,8 +3,10 @@ import updateObject from "../../utils/updateObject";
 
 const initialState = {
     data: [],
+    pagination: {},
     loading: false,
     error: null,
+    search: null,
 };
 
 const fetchBooksStart = (state, action) => {
@@ -12,9 +14,19 @@ const fetchBooksStart = (state, action) => {
 };
 
 const fetchBooksSuccess = (state, action) => {
+    let books = [];
+
+    if (state.search !== action.search) {
+        books = [...action.books];
+    } else {
+        books = [...state.data, ...action.books];
+    }
+
     return updateObject(state, {
-        data: action.books,
+        data: books,
+        pagination: action.pagination,
         loading: false,
+        search: action.search,
     });
 };
 
