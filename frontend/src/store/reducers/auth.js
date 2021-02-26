@@ -5,11 +5,15 @@ const initialState = {
     token: null,
     error: null,
     loading: false,
-    authRedirectPath: "/",
+    authRedirectPath: null,
 };
 
 const authStart = (state, action) => {
-    return updateObject(state, { error: null, loading: true });
+    return updateObject(state, {
+        error: null,
+        loading: true,
+        authRedirectPath: "/",
+    });
 };
 
 const authSuccess = (state, action) => {
@@ -17,6 +21,7 @@ const authSuccess = (state, action) => {
         token: action.token,
         error: null,
         loading: false,
+        authRedirectPath: "/",
     });
 };
 

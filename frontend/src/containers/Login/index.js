@@ -1,15 +1,15 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import Button from "react-bootstrap/Button";
+import authSchema from "../../constants/validation/auth";
 
 import * as actions from "../../store/actions";
 
 import style from "./Login.module.css";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
     const dispatch = useDispatch();
 
     const onLogin = useCallback(
@@ -18,11 +18,6 @@ const Login = () => {
     );
 
     const authData = useSelector((state) => state.auth);
-    const login = (event) => {
-        event.preventDefault();
-
-        onLogin(email, password);
-    };
 
     let errorMessage = null;
     if (authData.error) {
@@ -31,39 +26,52 @@ const Login = () => {
 
     let authRedirect = null;
     if (authData.token) {
-        authRedirect = <Redirect to={authData.authRedirectPath} />;
+        authRedirect = <Redirect to={authData.authRedirectPath} exact />;
     }
+
+    const handleSubmit = (values, { setSubmitting }) => {
+        setTimeout(() => {
+            onLogin(values.email, values.password);
+            setSubmitting(false);
+        }, 400);
+    };
 
     return (
         <div className={style.Login}>
             {authRedirect}
             {errorMessage}
-            <form onSubmit={(event) => login(event)}>
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                    ></input>
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                    ></input>
-                </div>
-                <button
-                    type="submit"
-                    className="btn btn-primary bg-gradient-primary text-white"
-                >
-                    Login
-                </button>
-            </form>
+            <Formik
+                initialValues={{ email: "", password: "" }}
+                validationSchema={authSchema}
+                onSubmit={handleSubmit}
+                enableReinitialize
+            >
+                {({ isSubmitting }) => (
+                    <Form>
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <Field
+                                className="form-control"
+                                type="text"
+                                name="email"
+                            />
+                            <ErrorMessage name="email" component="div" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <Field
+                                className="form-control"
+                                type="password"
+                                name="password"
+                            />
+                            <ErrorMessage name="lastName" component="div" />
+                        </div>
+                        <Button type="submit" disabled={isSubmitting}>
+                            Submit
+                        </Button>
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 };

@@ -39,6 +39,13 @@ export const checkAuthTimeout = (expirationTime) => {
     };
 };
 
+export const setAuthRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_AUTH_REDIRECT_PATH,
+        path: path,
+    };
+};
+
 export const auth = (email, password) => {
     return (dispatch) => {
         dispatch(authStart());
@@ -59,7 +66,12 @@ export const auth = (email, password) => {
                 localStorage.setItem("expirationDate", expirationDate);
 
                 dispatch(authSuccess(response.data.token));
-                dispatch(checkAuthTimeout(expirationDate));
+                dispatch(setAuthRedirectPath("/"));
+                dispatch(
+                    checkAuthTimeout(
+                        (expirationDate.getTime() - new Date().getTime()) / 1000
+                    )
+                );
             })
             .catch((err) => {
                 dispatch(authFail(err));
@@ -67,16 +79,8 @@ export const auth = (email, password) => {
     };
 };
 
-export const setAuthRedirectPath = (path) => {
-    return {
-        type: actionTypes.SET_AUTH_REDIRECT_PATH,
-        path: path,
-    };
-};
-
 export const authCheckState = () => {
     return (dispatch) => {
-        console.log("checking");
         const token = localStorage.getItem("token");
         if (!token) {
             dispatch(logout());
